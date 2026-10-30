@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="../favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Бъркотия · Прояви снимката</title>
+  <meta name="description" content="Снимки като моментални фотографии: потъркай ги, за да се проявят.">
+  <meta name="theme-color" content="#5a4330">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500..700&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..600&family=Onest:wght@400..700&family=Unbounded:wght@500..800&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script src="../shared/content.js"></script>
+  <script src="../shared/site.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script type="module" src="main.js"></script>
+</head>
+<body>
+  <div class="scene" id="scene">
+    <canvas class="wood" id="wood" aria-hidden="true"></canvas>
+    <div class="light" aria-hidden="true">
+      <div class="light__pool"></div>
+      <div class="light__leaves">
+        <i style="--x:8%;--y:30%;--a:-32deg"></i><i style="--x:24%;--y:12%;--a:-62deg"></i>
+        <i style="--x:36%;--y:34%;--a:18deg"></i><i style="--x:18%;--y:50%;--a:42deg"></i>
+        <i style="--x:52%;--y:18%;--a:-12deg"></i><i style="--x:44%;--y:56%;--a:64deg"></i>
+        <b></b>
+      </div>
+    </div>
+    <div class="props" aria-hidden="true">
+      <div class="stain"></div>
+    </div>
+
+    <header class="top">
+      <div class="brand">
+        <a class="tape" href="#/" id="home">
+          <span class="tape__name" data-site="name">Бъркотия</span>
+        </a>
+        <p class="labtag" data-u="labTag"></p>
+      </div>
+      <div class="top__right">
+        <div class="actions" id="actions">
+          <div class="ctl">
+            <button class="dymo dymo--red" id="developAll" type="button"><span data-u="developAll"></span></button>
+            <span class="ctl__note" data-u="developAllNote" aria-hidden="true"></span>
+          </div>
+          <div class="ctl">
+            <button class="dymo dymo--black" id="reset" type="button"><span data-u="reset"></span></button>
+          </div>
+        </div>
+        <div class="tools">
+          <div class="lang" role="group" id="lang">
+            <button class="lang__print" type="button" data-lang="bg"><span class="lang__win"><b>БГ</b></span></button>
+            <button class="lang__print" type="button" data-lang="en"><span class="lang__win"><b>EN</b></span></button>
+          </div>
+          <a class="dymo dymo--blue dymo--list" id="listLink" href="#/list">
+            <span class="dymo__long" data-t="listView"></span><span class="dymo__short" data-t="listViewShort"></span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <section class="head" id="albumHead" aria-live="polite">
+      <div class="head__card">
+        <h1 class="head__title"><span id="albumTitle"></span> <small id="albumCount"></small></h1>
+        <p class="head__note" id="albumNote"></p>
+      </div>
+      <p class="head__hint" id="hint"></p>
+    </section>
+
+    <div class="table" id="table"></div>
+
+    <div class="pager" id="pager">
+      <button class="pager__btn" type="button" id="prevPrint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <span class="pager__count" id="pagerCount"></span>
+      <button class="pager__btn" type="button" id="nextPrint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <div class="phone-actions" id="phoneActions"></div>
+
+    <nav class="boxes" id="boxes"></nav>
+
+    <footer class="foot">
+      <a class="foot__link" href="../" data-proto>← <span data-t="prototypes"></span></a>
+      <a class="foot__link" id="credits" data-t="photoCredits"></a>
+    </footer>
+    <div class="rubcue" id="rubcue" aria-hidden="true"><span class="rubcue__tip"></span><span class="rubcue__label" data-u="rubCue"></span></div>
+  </div>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" hidden>
+    <div class="lightbox__backdrop" data-close></div>
+    <div class="lightbox__top">
+      <p class="lightbox__meta"><span id="lbAlbum"></span> · <span id="lbCount"></span></p>
+      <button class="round" type="button" id="lbClose"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="lightbox__stage" id="lbStage"></div>
+    <button class="round lightbox__nav lightbox__nav--prev" type="button" id="lbPrev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="round lightbox__nav lightbox__nav--next" type="button" id="lbNext"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+  </div>
+
+  <div class="sheet" id="list" role="dialog" aria-modal="true" aria-labelledby="listTitle" hidden>
+    <div class="sheet__backdrop" data-close></div>
+    <div class="sheet__panel" id="listPanel"></div>
+  </div>
+
+  <div class="reader" id="reader" role="dialog" aria-modal="true" hidden>
+    <div class="reader__scroll" id="readerScroll"></div>
+    <div class="reader__mud" aria-hidden="true"></div>
+  </div>
+
+  <div class="notes" id="notes" aria-hidden="true"></div>
+  <p class="sr-only" id="live" aria-live="polite"></p>
+</body>
+</html>

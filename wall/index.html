@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="../favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Бъркотия — безкрайната стена</title>
+  <meta name="description" content="Бъркотия: безкрайна стена от истории, мнения и снимки.">
+  <meta name="theme-color" content="#cfc7b6">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Dela+Gothic+One&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=Neucha&family=Oswald:wght@500;700&family=PT+Mono&family=Rubik:wght@500;700;900&family=Rubik+Spray+Paint&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script src="../shared/content.js"></script>
+  <script src="../shared/site.js"></script>
+  <link rel="modulepreload" href="engine.js">
+  <script type="module" src="main.js"></script>
+</head>
+<body>
+  <a class="protolink" href="../"><span>Всички прототипи</span></a>
+  <a class="listlink" href="#/list"><span class="listlink__t">Просто ми покажи списък</span><span class="listlink__s" aria-hidden="true">Списък</span></a>
+
+  <nav class="dock" aria-label="Карта на стената">
+    <button class="mag mag--home" type="button"></button>
+    <button class="mag mag--find" type="button"></button>
+    <button class="mag mag--out" type="button"></button>
+    <button class="mag mag--in" type="button"></button>
+    <span class="dock__lang"></span>
+    <button class="mag mag--sound" type="button" aria-pressed="false"></button>
+  </nav>
+
+  <aside class="minimap" aria-label="Карта на стената">
+    <canvas aria-hidden="true"></canvas>
+    <p class="minimap__foot"><span class="minimap__dist" aria-live="polite"></span><a class="credits" href="../shared/credits.html">Снимки: Wikimedia Commons</a></p>
+  </aside>
+
+  <main class="stage" id="stage" tabindex="-1" aria-label="Безкрайната стена">
+    <div class="world" id="world"></div>
+  </main>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <div class="hint" hidden role="note"></div>
+  <div class="toast" hidden role="status" aria-live="polite"></div>
+  <div class="fx" aria-hidden="true"></div>
+
+  <div class="wipe" hidden aria-hidden="true">
+    <div class="wipe__brush">
+      <i class="wipe__wet"></i>
+      <i class="wipe__handle"></i>
+      <i class="wipe__ferrule"></i>
+      <i class="wipe__bristles"></i>
+    </div>
+  </div>
+
+  <div class="finder" id="finder" hidden>
+    <div class="finder__scrim"></div>
+    <div class="finder__paper" role="dialog" aria-modal="true" aria-labelledby="finder-title">
+      <button class="finder__close" type="button"></button>
+      <h2 id="finder-title"></h2>
+      <p class="finder__note"></p>
+      <div class="finder__body"></div>
+    </div>
+  </div>
+
+  <section class="listview" id="listview" hidden aria-labelledby="lv-title">
+    <div class="listview__in"></div>
+  </section>
+
+  <div class="reader" id="reader" hidden>
+    <div class="reader__backdrop"></div>
+    <article class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" tabindex="-1">
+      <div class="sheet__tools"><button class="sheet__close" type="button"></button></div>
+      <div class="sheet__scroll">
+        <div class="sheet__content"></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="viewer" id="viewer" hidden role="dialog" aria-modal="true">
+    <div class="viewer__backdrop"></div>
+    <header class="viewer__head">
+      <div class="viewer__titles"><h2 class="viewer__album"></h2><p class="viewer__note"></p></div>
+      <div class="viewer__tools"><button class="viewer__close" type="button"></button></div>
+    </header>
+    <div class="viewer__stage"></div>
+    <button class="viewer__nav viewer__nav--prev" type="button"></button>
+    <button class="viewer__nav viewer__nav--next" type="button"></button>
+    <p class="viewer__count"></p>
+    <div class="viewer__strip"></div>
+  </div>
+
+  <div class="loader" role="status">
+    <div class="loader__roll" aria-hidden="true"><i></i></div>
+    <p class="loader__t">Лепим стената…</p>
+  </div>
+  <script>
+    // If the wall can't load (flaky network), don't leave people staring at a spinning roll of tape.
+    setTimeout(function () {
+      if (document.body.classList.contains('is-ready')) return;
+      var t = document.querySelector('.loader__t');
+      if (!t) return;
+      var en = window.Blog && window.Blog.lang === 'en';
+      t.innerHTML = (en ? 'The wall is being shy. ' : 'Стената се срамува. ') +
+        '<a href="" style="color:inherit">' + (en ? 'Try again' : 'Опитай пак') + '</a>';
+    }, 10000);
+  </script>
+</body>
+</html>

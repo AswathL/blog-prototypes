@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="../favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2a3fd8">
+  <title>Бъркотия</title>
+  <meta name="description" content="Красива бъркотия от истории, мнения и снимки.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Rubik:wght@400;500;600;700;800&family=Unbounded:wght@600;900&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script src="../shared/content.js"></script>
+  <script src="../shared/site.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app" id="app">
+    <main class="world" id="world">
+      <div class="sky" aria-hidden="false">
+        <div class="grain" aria-hidden="true"></div>
+        <span class="sparkle" style="--x: 8%; --y: 34%; --s: 1; --d: 0s" aria-hidden="true"></span>
+        <span class="sparkle" style="--x: 46%; --y: 12%; --s: .7; --d: 1.2s" aria-hidden="true"></span>
+        <span class="sparkle" style="--x: 61%; --y: 30%; --s: .55; --d: 2.1s" aria-hidden="true"></span>
+        <span class="sparkle" style="--x: 88%; --y: 42%; --s: .9; --d: .6s" aria-hidden="true"></span>
+        <span class="sparkle" style="--x: 30%; --y: 46%; --s: .5; --d: 1.7s" aria-hidden="true"></span>
+        <span class="sparkle" style="--x: 74%; --y: 8%; --s: .65; --d: 2.6s" aria-hidden="true"></span>
+        <div class="sky-intro" id="sky-intro">
+          <p class="sky-meaning" id="sky-meaning"></p>
+          <p class="sky-tagline" id="sky-tagline"></p>
+        </div>
+        <p class="hint" id="hint" aria-hidden="true">
+          <span class="hint-text"><span id="hint-a"></span> <span id="hint-b"></span></span>
+          <span class="hint-arrow" id="hint-arrow"></span>
+        </p>
+      </div>
+      <h1 class="sr-only" id="site-name">Бъркотия</h1>
+      <div class="layer" id="layer">
+        <div class="layer-letters" id="layer-letters" aria-hidden="true"></div>
+        <div class="layer-about" id="layer-about"></div>
+        <section class="layer-posts" id="layer-posts" data-ui-label="postsLabel"></section>
+        <div class="layer-photos" id="layer-photos" role="group" data-ui-label="printsLabel"></div>
+        <div class="layer-props" id="layer-props" role="group" data-ui-label="propsLabel"></div>
+      </div>
+      <div class="bubble" id="bubble" hidden></div>
+    </main>
+
+    <header class="topbar">
+      <a class="corner-link" href="../"><span aria-hidden="true">←</span> <span data-t="prototypes"></span></a>
+      <div class="topbar-right">
+        <a class="credits" href="../shared/credits.html" data-t="photoCredits"></a>
+        <button type="button" class="round-btn small" id="sound-btn" aria-pressed="false"></button>
+      </div>
+    </header>
+
+    <nav class="ground" id="ground" data-ui-label="toolbarLabel">
+      <div class="hatch" aria-hidden="true"><span class="hatch-l"></span><span class="hatch-r"></span></div>
+      <div class="tools">
+        <div class="filter" role="group" data-ui-label="filterLabel">
+          <button type="button" data-filter="all" aria-pressed="true"><span data-ui="everything"></span></button>
+          <button type="button" data-filter="story" aria-pressed="false"><span data-t="stories"></span></button>
+          <button type="button" data-filter="opinion" aria-pressed="false"><span data-t="opinions"></span></button>
+        </div>
+        <div class="actions">
+          <button type="button" class="tool" data-act="photos"><span class="ico"></span><span class="lbl" id="photos-label"></span></button>
+          <button type="button" class="tool" data-act="shake"><span class="ico"></span><span class="lbl" data-ui="shake"></span></button>
+          <button type="button" class="tool" data-act="tilt" aria-pressed="false" hidden><span class="ico"></span><span class="lbl" data-ui="tilt"></span></button>
+          <button type="button" class="tool" data-act="cleanup"><span class="ico"></span><span class="lbl" data-ui="cleanup"></span></button>
+          <a class="tool tool-list" id="list-link" href="#/list" data-t-label="listView"><span class="ico"></span><span class="lbl lbl-long" data-t="listView"></span><span class="lbl lbl-short" data-t="listViewShort"></span></a>
+        </div>
+        <div class="lang-slot" id="lang-slot"></div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="overlay reader" id="reader" role="dialog" aria-modal="true" hidden></div>
+  <div class="overlay viewer" id="viewer" role="dialog" aria-modal="true" hidden></div>
+  <div class="overlay listview" id="list" role="dialog" aria-modal="true" aria-labelledby="list-title" hidden></div>
+
+  <p class="toast" id="toast" role="status" aria-live="polite"></p>
+  <p class="sr-only" id="live" aria-live="polite"></p>
+
+  <div class="loader" id="loader" aria-hidden="true">
+    <span class="loader-ball"></span>
+    <span class="loader-floor"></span>
+    <span class="loader-text" data-t="loading">Зареждане…</span>
+  </div>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Бъркотия · малка планета</title>
+  <meta name="description" content="Красива бъркотия от истории, мнения и снимки — на една малка планета.">
+  <meta name="theme-color" content="#16123a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='34' r='20' fill='%2378b05c'/%3E%3Cellipse cx='32' cy='34' rx='30' ry='8' fill='none' stroke='%23ffd166' stroke-width='4'/%3E%3Crect x='26' y='12' width='12' height='10' fill='%23c9583d'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..600&family=Onest:wght@400;500;600;700&family=Unbounded:wght@500;700;800;900&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script src="../shared/content.js"></script>
+  <script src="../shared/site.js"></script>
+  <script type="module" src="main.js"></script>
+</head>
+<body data-sky="night">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-house" viewBox="0 0 24 24"><path d="M3.5 11.2 12 4l8.5 7.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 10.5V20h13v-9.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10 20v-5h4v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M4 14.5h16" stroke="currentColor" stroke-width="1.6"/></symbol>
+      <symbol id="i-mega" viewBox="0 0 24 24"><path d="M4 10v4l3 .5L17 19V5L7 9.5 4 10Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M7.5 14.6 9 20h2.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 9.5c.9.7.9 4.3 0 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.6A8 8 0 1 1 9.4 4.5a6.4 6.4 0 0 0 10.1 10.1Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="10" cy="14" r="1.3" fill="currentColor"/><circle cx="13.5" cy="17.2" r=".9" fill="currentColor"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></g></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-list" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6.5h11M9 12h11M9 17.5h11"/></g><g fill="currentColor"><circle cx="4.5" cy="6.5" r="1.4"/><circle cx="4.5" cy="12" r="1.4"/><circle cx="4.5" cy="17.5" r="1.4"/></g></symbol>
+      <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path class="wave" d="M15.5 9.2c1.2 1.4 1.2 4.2 0 5.6M18.3 6.8c2.6 2.8 2.6 7.6 0 10.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="mute" d="m16 9.5 5 5m0-5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="i-planet" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.2 15.6c-1.6 2.2 4.6.9 10-2.4s8.8-7.9 7.2-9.1c-.8-.6-2.6-.2-4.8.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    </defs>
+  </svg>
+
+  <div id="app" class="app">
+    <canvas id="scene" class="scene" aria-hidden="true" tabindex="-1"></canvas>
+    <div class="vignette" aria-hidden="true"></div>
+
+    <header class="hud hud-top">
+      <a class="proto-link" href="../"><span aria-hidden="true">←</span> <span data-blog="prototypes">Всички прототипи</span></a>
+      <h1 class="brand" id="brand"><span class="brand-name" id="brand-name"></span></h1>
+      <p class="brand-note" id="brand-note" aria-hidden="true"></p>
+      <p class="tagline" id="tagline"></p>
+    </header>
+
+    <div class="hud hud-controls">
+      <button class="ctl ctl-sky" id="btn-sky" type="button">
+        <svg class="ic ic-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+        <svg class="ic ic-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+      </button>
+      <button class="ctl ctl-sound" id="btn-sound" type="button" aria-pressed="false">
+        <svg class="ic" aria-hidden="true"><use href="#i-sound"/></svg>
+      </button>
+      <div class="lang" role="group" id="lang">
+        <span class="lang-knob" aria-hidden="true"><span class="lang-knob-ring"></span></span>
+        <button type="button" data-lang="bg" lang="bg">БГ</button>
+        <button type="button" data-lang="en" lang="en">EN</button>
+      </div>
+    </div>
+
+    <div id="pins" class="pins" role="group"></div>
+    <p class="hint" id="hint" aria-hidden="true"></p>
+    <p class="sr-only" id="keys-help"></p>
+
+    <footer class="hud hud-bottom">
+      <div class="census-wrap">
+        <p class="census" id="census"></p>
+        <p class="grows" id="grows"></p>
+        <ul class="legend" id="legend">
+          <li><button type="button" data-legend="story"><svg class="ic" aria-hidden="true"><use href="#i-house"/></svg><span></span></button></li>
+          <li><button type="button" data-legend="opinion"><svg class="ic" aria-hidden="true"><use href="#i-mega"/></svg><span></span></button></li>
+          <li><button type="button" data-legend="moon"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg><span></span></button></li>
+        </ul>
+      </div>
+      <div class="foot-links">
+        <a class="list-link" href="#/list"><svg class="ic" aria-hidden="true"><use href="#i-list"/></svg><span data-blog="listView">Просто ми покажи списък</span></a>
+        <a class="credits" id="credits" data-blog="photoCredits" href="../shared/credits.html">Снимки: Wikimedia Commons</a>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <!-- Reader -->
+  <div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="reader-title" hidden>
+    <div class="reader-glow" aria-hidden="true"></div>
+    <div class="reader-scroll" id="reader-scroll">
+      <div class="reader-bar">
+        <button class="back-btn" type="button" id="reader-close"><svg class="ic" aria-hidden="true"><use href="#i-planet"/></svg><span class="long" data-t="backToPlanet">Обратно на планетата</span><span class="short" data-blog="back">Назад</span></button>
+        <div class="progress" aria-hidden="true"><div class="progress-rail"></div><div class="progress-tram" id="progress-tram"><svg viewBox="0 0 34 16"><rect x="1" y="3" width="32" height="10" rx="3" fill="#2f8a4a"/><rect x="1" y="8" width="32" height="2" fill="#f3e7c4"/><g fill="#ffe3a3"><rect x="4" y="4.5" width="5" height="3" rx=".6"/><rect x="11" y="4.5" width="5" height="3" rx=".6"/><rect x="18" y="4.5" width="5" height="3" rx=".6"/><rect x="25" y="4.5" width="5" height="3" rx=".6"/></g><path d="M15 3 18 0M19 3 16 0" stroke="#3a3a44" stroke-width="1"/><circle cx="8" cy="14" r="1.6" fill="#2c2c33"/><circle cx="26" cy="14" r="1.6" fill="#2c2c33"/></svg></div></div>
+        <div class="lang lang--paper" role="group">
+          <span class="lang-knob" aria-hidden="true"><span class="lang-knob-ring"></span></span>
+          <button type="button" data-lang="bg" lang="bg">БГ</button>
+          <button type="button" data-lang="en" lang="en">EN</button>
+        </div>
+      </div>
+      <article class="post" id="post"></article>
+      <nav class="post-nav" id="post-nav"></nav>
+      <p class="reader-end"><button class="back-btn back-btn--end" type="button" id="reader-close-2"><svg class="ic" aria-hidden="true"><use href="#i-planet"/></svg><span data-t="backToPlanet">Обратно на планетата</span></button></p>
+    </div>
+  </div>
+
+  <!-- Moon gallery -->
+  <div class="gallery" id="gallery" role="dialog" aria-modal="true" aria-labelledby="gallery-title" hidden>
+    <div class="g-sky" aria-hidden="true"></div>
+    <div class="g-moon" aria-hidden="true"></div>
+    <header class="g-head">
+      <div>
+        <h2 class="g-title" id="gallery-title" data-t="galleryTitle">Снимки от луната</h2>
+        <p class="g-sub" data-t="gallerySub"></p>
+      </div>
+      <div class="g-actions">
+        <div class="lang lang--night" role="group">
+          <span class="lang-knob" aria-hidden="true"><span class="lang-knob-ring"></span></span>
+          <button type="button" data-lang="bg" lang="bg">БГ</button>
+          <button type="button" data-lang="en" lang="en">EN</button>
+        </div>
+        <button class="round-btn" type="button" id="gallery-close"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+      </div>
+    </header>
+    <div class="g-albums" id="g-albums" role="tablist"></div>
+    <p class="g-note" id="g-note"></p>
+    <div class="g-track" id="g-track" tabindex="0" aria-roledescription="carousel"></div>
+    <div class="g-controls">
+      <button class="round-btn" type="button" id="g-prev"><svg class="ic flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <p class="g-count" id="g-count" aria-live="polite"></p>
+      <button class="round-btn" type="button" id="g-next"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    </div>
+  </div>
+
+  <!-- Plain list -->
+  <div class="listview" id="listview" role="dialog" aria-modal="true" aria-labelledby="list-title" hidden>
+    <div class="list-backdrop" data-close></div>
+    <div class="list-sheet">
+      <div class="list-head">
+        <h2 id="list-title" data-blog="allPosts">Всички публикации</h2>
+        <div class="g-actions">
+          <div class="lang lang--paper" role="group">
+          <span class="lang-knob" aria-hidden="true"><span class="lang-knob-ring"></span></span>
+          <button type="button" data-lang="bg" lang="bg">БГ</button>
+          <button type="button" data-lang="en" lang="en">EN</button>
+        </div>
+          <button class="round-btn round-btn--ink" type="button" id="list-close"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+        </div>
+      </div>
+      <p class="list-note" id="list-note" hidden></p>
+      <ol class="list-posts" id="list-posts"></ol>
+      <h3 class="list-sub" data-blog="gallery">Снимки</h3>
+      <ul class="list-albums" id="list-albums"></ul>
+    </div>
+  </div>
+
+  <!-- Loader -->
+  <div class="loader" id="loader" role="status">
+    <div class="loader-planet" aria-hidden="true">
+      <span class="lp-ball"></span>
+      <span class="lp-ring"></span>
+      <span class="lp-house"></span>
+      <span class="lp-tree t1"></span>
+      <span class="lp-tree t2"></span>
+      <span class="lp-moon"></span>
+    </div>
+    <p class="loader-text" id="loader-text">Сглобявам една малка планета…</p>
+  </div>
+</body>
+</html>

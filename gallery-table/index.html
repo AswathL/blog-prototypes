@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="bg">
+  <head>
+    <meta charset="utf-8" />
+  <link rel="icon" href="../favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Бъркотия — маса със снимки</title>
+    <meta name="theme-color" content="#1c0f07" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..600&family=PT+Mono&family=Rubik+Mono+One&display=swap"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="../shared/content.js"></script>
+    <script src="../shared/site.js"></script>
+    <script type="module" src="main.js"></script>
+  </head>
+  <body>
+    <header class="top" id="top">
+      <div class="brand" id="brand">
+        <h1 class="brand-h">
+          <button class="name-tape" id="nameTape" type="button" aria-expanded="false" aria-controls="meaning">
+            <span class="name-text" id="nameText"></span>
+          </button>
+        </h1>
+        <p class="meaning hand" id="meaning"></p>
+        <p class="tagline" id="tagline"></p>
+      </div>
+      <div class="controls" id="controls" role="group">
+        <div class="tools" id="tools">
+          <button class="tape tape--black" id="tidyBtn" type="button">
+            <span class="tape-in">
+              <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+              <span class="tape-t"></span>
+            </span>
+          </button>
+          <button class="tape tape--red" id="messBtn" type="button">
+            <span class="tape-in">
+              <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" fill="currentColor"><rect x="1" y="3" width="7" height="5" rx="1" transform="rotate(-14 4 5)"/><rect x="8" y="1.5" width="6" height="6" rx="1" transform="rotate(18 11 4)"/><rect x="3" y="9" width="7" height="5" rx="1" transform="rotate(9 6 11)"/></svg>
+              <span class="tape-t"></span>
+            </span>
+          </button>
+          <button class="tape tape--black tape--sound" id="soundBtn" type="button" aria-pressed="false">
+            <span class="tape-in">
+              <svg class="ico-off" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/><path d="M11 6l4 4M15 6l-4 4"/></svg>
+              <svg class="ico-on" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/><path d="M11.5 5.5a3.5 3.5 0 0 1 0 5M13.5 3.5a6.5 6.5 0 0 1 0 9"/></svg>
+              <span class="tape-t"></span>
+            </span>
+          </button>
+        </div>
+        <button class="tape tape--blue tape--lang" id="langBtn" type="button">
+          <span class="tape-in"><span class="l-bg">БГ</span><span class="l-sep" aria-hidden="true">/</span><span class="l-en">EN</span></span>
+        </button>
+        <a class="tape tape--white" id="listBtn" href="#/list">
+          <span class="tape-in">
+            <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 4h9M5 8h9M5 12h9"/><circle cx="2" cy="4" r=".6" fill="currentColor"/><circle cx="2" cy="8" r=".6" fill="currentColor"/><circle cx="2" cy="12" r=".6" fill="currentColor"/></svg>
+            <span class="tape-t full"></span><span class="tape-t short"></span>
+          </span>
+        </a>
+      </div>
+    </header>
+
+    <main class="stage" id="stage">
+      <canvas class="wood" id="wood" aria-hidden="true"></canvas>
+
+      <div class="props" aria-hidden="true">
+        <svg class="ring" id="ring" viewBox="0 0 220 220">
+          <defs>
+            <filter id="coffee" x="-10%" y="-10%" width="120%" height="120%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="7" />
+              <feDisplacementMap in="SourceGraphic" scale="6" />
+              <feGaussianBlur stdDeviation="0.6" />
+            </filter>
+          </defs>
+          <g filter="url(#coffee)" fill="none">
+            <circle cx="110" cy="110" r="86" stroke="rgba(22,9,2,0.42)" stroke-width="3" />
+            <circle cx="110" cy="110" r="82" stroke="rgba(22,9,2,0.13)" stroke-width="8" />
+            <path d="M34 150 A86 86 0 0 0 128 195" stroke="rgba(22,9,2,0.32)" stroke-width="2.2" />
+            <path d="M178 58 A86 86 0 0 0 150 34" stroke="rgba(255,220,180,0.06)" stroke-width="2" />
+          </g>
+        </svg>
+        <div class="sticky" id="sticky"><p class="hand"></p></div>
+      </div>
+
+      <div class="prints" id="prints"></div>
+
+      <div class="empty-note" id="emptyNote" aria-hidden="true">
+        <p class="hand"></p>
+        <svg viewBox="0 0 40 60" width="26" height="40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 4c-3 14 4 26 0 50" /><path d="M10 44l10 12 10-12" />
+        </svg>
+      </div>
+
+      <nav class="tray" id="tray"></nav>
+
+      <div class="light" id="light" aria-hidden="true"></div>
+    </main>
+
+
+    <footer class="corner" id="corner">
+      <a class="corner-a" id="protoLink" href="../"><span aria-hidden="true">←&nbsp;</span><span></span></a>
+      <a class="corner-a" id="creditsLink" href="../shared/credits.html"></a>
+    </footer>
+
+    <div class="toast hand" id="toast" aria-hidden="true"></div>
+    <div class="sr-only" id="live" role="status" aria-live="polite"></div>
+
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" tabindex="-1" hidden>
+      <div class="lb-back"></div>
+      <div class="lb-stage" id="lbStage"></div>
+      <div class="lb-slip" id="lbSlip">
+        <p class="lb-cap hand" id="lbCap"></p>
+        <p class="lb-meta" id="lbMeta"></p>
+      </div>
+      <button class="lb-arrow lb-prev" id="lbPrev" type="button">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <button class="lb-arrow lb-next" id="lbNext" type="button">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <button class="tape tape--white lb-close" id="lbClose" type="button">
+        <span class="tape-in"><span aria-hidden="true">×</span><span class="tape-t"></span></span>
+      </button>
+    </div>
+
+    <div class="sheets" id="sheets" hidden>
+      <div class="sheet-dim" id="sheetDim"></div>
+      <div class="sheet-scroll" id="sheetScroll"></div>
+      <button class="tape tape--blue tape--lang sheet-lang" id="sheetLang" type="button">
+        <span class="tape-in"><span class="l-bg">БГ</span><span class="l-sep" aria-hidden="true">/</span><span class="l-en">EN</span></span>
+      </button>
+      <button class="tape tape--white sheet-close" id="sheetClose" type="button">
+        <span class="tape-in"><span aria-hidden="true">×</span><span class="tape-t"></span></span>
+      </button>
+    </div>
+
+    <div class="loader" id="loader" aria-hidden="true">
+      <div class="loader-in">
+        <svg class="loader-lamp" viewBox="0 0 80 90" width="64" height="72" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <path d="M40 0v30" />
+          <path d="M22 50c0-12 8-20 18-20s18 8 18 20z" />
+          <path d="M34 50a6 6 0 0 0 12 0" />
+          <path d="M58 22v26" stroke-dasharray="2 3" />
+          <circle cx="58" cy="51" r="2.2" fill="currentColor" />
+        </svg>
+        <p class="hand" id="loaderText">Зареждане…</p>
+      </div>
+    </div>
+    <script>
+      document.getElementById('loaderText').textContent = window.Blog.t('loading');
+    </script>
+  </body>
+</html>

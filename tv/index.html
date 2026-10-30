@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="../favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Бъркотия · Телевизорът</title>
+  <meta name="description" content="Стар телевизор, дистанционно и котка. Блогът на една красива бъркотия.">
+  <meta name="theme-color" content="#140d09">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant:ital,wght@0,500;0,600;1,500;1,600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Press+Start+2P&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Russo+One&family=Yeseva+One&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script src="../shared/content.js"></script>
+  <script src="../shared/site.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <div class="app is-booting" id="app">
+    <h1 class="sr-only" id="siteTitle">Бъркотия</h1>
+    <div class="boot" id="boot" aria-hidden="true"><span id="bootText"></span></div>
+
+    <main class="room" id="room">
+      <div class="camera" id="camera">
+        <canvas class="wall-canvas" id="wallCanvas" aria-hidden="true"></canvas>
+        <div class="stage" id="stage"></div>
+      </div>
+      <div class="lens" id="lens" aria-hidden="true"></div>
+    </main>
+
+    <header class="chrome" id="chrome">
+      <div class="chrome-left">
+        <a class="chip chip-ghost" href="../" id="protoLink">← <span data-blog="prototypes">Всички прототипи</span></a>
+        <a class="credits" href="../shared/credits.html" data-blog="photoCredits" id="creditsLink">Снимки: Wikimedia Commons</a>
+      </div>
+      <nav class="chrome-right" aria-label="Бързи връзки" id="chromeNav">
+        <a class="chip" href="#/list" id="listLink"><span class="chip-ico" aria-hidden="true">☰</span><span class="chip-long" data-blog="listView">Просто ми покажи списък</span><span class="chip-short" data-blog="listViewShort">Списък</span></a>
+        <button class="chip chip-sound" type="button" id="soundChip" aria-pressed="false"><span class="chip-ico" aria-hidden="true"></span><span class="chip-sound-label">Звук: изкл.</span></button>
+        <button class="chip chip-lang" type="button" id="langChip"><span class="lang-opt" data-l="bg">БГ</span><span class="lang-opt" data-l="en">EN</span></button>
+      </nav>
+    </header>
+
+    <div class="dock" id="dock"></div>
+
+    <div class="sr-only" aria-live="polite" id="live"></div>
+
+    <section class="reader" id="reader" role="dialog" aria-labelledby="readerTitle" hidden>
+      <div class="reader-scan" aria-hidden="true"></div>
+      <div class="reader-bar">
+        <span class="reader-osd" id="readerOsd"></span>
+        <div class="reader-actions">
+          <button class="rbtn rbtn-close" type="button" id="readerClose"><span aria-hidden="true">✕</span><span class="rbtn-label"></span></button>
+        </div>
+      </div>
+      <div class="reader-scroll" id="readerScroll" tabindex="-1">
+        <article class="reader-article" id="readerArticle"></article>
+      </div>
+    </section>
+
+    <section class="viewer" id="viewer" role="dialog" aria-labelledby="viewerTitle" hidden>
+      <div class="reader-scan" aria-hidden="true"></div>
+      <div class="viewer-bar">
+        <p class="viewer-title" id="viewerTitle"></p>
+        <div class="reader-actions">
+          <button class="rbtn rbtn-close" type="button" id="viewerClose"><span aria-hidden="true">✕</span><span class="rbtn-label"></span></button>
+        </div>
+      </div>
+      <figure class="viewer-figure" id="viewerFigure">
+        <div class="viewer-frame"><img id="viewerImg" alt="" decoding="async"></div>
+        <figcaption class="viewer-cap" id="viewerCap"></figcaption>
+        <a class="viewer-credits" href="../shared/credits.html" data-blog="photoCredits">Снимки: Wikimedia Commons</a>
+      </figure>
+      <button class="viewer-nav viewer-prev" type="button" id="viewerPrev"><span aria-hidden="true">◀</span></button>
+      <button class="viewer-nav viewer-next" type="button" id="viewerNext"><span aria-hidden="true">▶</span></button>
+    </section>
+
+    <section class="guide" id="guide" role="dialog" aria-labelledby="guideTitle" hidden>
+      <div class="guide-paper" id="guidePaper" tabindex="-1"></div>
+    </section>
+  </div>
+</body>
+</html>
