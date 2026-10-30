@@ -815,8 +815,9 @@ export function photoItem(d) {
   const img = h('img', {
     src: Bl.thumbUrl(photo.file),
     alt: '',
-    loading: 'lazy',
-    decoding: 'async',
+    // eager + sync: Chrome on Android paints async images blank ("checker-imaging") whenever a tile
+    // re-rasters during a pan or zoom, which reads as the photos flickering
+    decoding: 'sync',
     draggable: 'false',
     width: 640,
     height: Math.round(640 * (photo.h / photo.w)),
@@ -1124,7 +1125,7 @@ export function echoItem(d, rnd) {
     } else if (d.src.kind === 'photo') {
       const a = Bl.albums.find((x) => x.slug === d.src.album);
       const p = a.photos[d.src.index];
-      inner = `<img src="${Bl.thumbUrl(p.file)}" alt="" loading="lazy" decoding="async" draggable="false"><span class="echo__c">${esc(Bl.text(p.caption))}</span>`;
+      inner = `<img src="${Bl.thumbUrl(p.file)}" alt="" decoding="sync" draggable="false"><span class="echo__c">${esc(Bl.text(p.caption))}</span>`;
     }
     it.el.setAttribute('aria-label', tt('echoOf'));
     it.face.innerHTML = `${inner}<span class="echo__badge">↩ ${esc(tt('echo'))}</span>`;
@@ -1588,7 +1589,23 @@ export function createWorld(worldEl, camera) {
     });
   }
 
+  // Recently unmounted chunks keep their DOM, so panning back re-attaches it instead of rebuilding
+  // every element (and re-decoding every image) mid-gesture.
+  const DOM_CACHE_MAX = 48;
+  const domCache = [];
+
   function mountChunk(ch) {
+    if (ch.items) {
+      const k = domCache.indexOf(ch);
+      if (k >= 0) domCache.splice(k, 1);
+      layers.wall.append(ch.bg);
+      ch.items.forEach((it, k) => {
+        it.render();
+        layers[ch.descs[k].layer].append(it.el);
+      });
+      ch.mounted = true;
+      return;
+    }
     ch.bg = chunkBg(ch.i, ch.j, CHUNK);
     layers.wall.append(ch.bg);
     ch.items = ch.descs.map((d) => {
@@ -1606,8 +1623,13 @@ export function createWorld(worldEl, camera) {
   function unmountChunk(ch) {
     ch.bg?.remove();
     for (const it of ch.items || []) it.el.remove();
-    ch.items = null;
     ch.mounted = false;
+    domCache.push(ch);
+    if (domCache.length > DOM_CACHE_MAX) {
+      const old = domCache.shift();
+      old.items = null;
+      old.bg = null;
+    }
   }
 
   function update() {
@@ -1647,7 +1669,7 @@ export function createWorld(worldEl, camera) {
         if (chunks.size < 600) break;
       }
     }
-    const far = camera.z < 0.3;
+    const far = lastFar ? camera.z < 0.33 : camera.z < 0.27;
     if (far !== lastFar) {
       worldEl.classList.toggle('is-far', far);
       lastFar = far;

@@ -870,7 +870,7 @@ function goblenSVG() {
       <rect x="12" y="12" width="276" height="212" fill="url(#beads)"/>
       <rect x="21" y="21" width="258" height="194" fill="url(#goldIn)"/>
       <rect x="26" y="26" width="248" height="184" fill="#d9cdb4"/>
-      <image class="goblen-img" x="26" y="26" width="248" height="184" preserveAspectRatio="xMidYMid slice"/>
+      <image decoding="sync" class="goblen-img" x="26" y="26" width="248" height="184" preserveAspectRatio="xMidYMid slice"/>
       <rect x="26" y="26" width="248" height="184" fill="none" stroke="#1c1006" stroke-opacity=".6" stroke-width="2"/>
       <rect x="1.5" y="1.5" width="297" height="233" rx="2" fill="none" stroke="#fff3c8" stroke-opacity=".35" stroke-width="1.5"/>
     </g>
@@ -895,9 +895,9 @@ function cabinetSVG(tex) {
     </g>`;
   return `<svg class="cabinet" viewBox="0 0 1760 1000" style="left:0;top:850px;width:1760px;height:1000px" aria-hidden="true">
     <defs>
-      <pattern id="cabTop" patternUnits="userSpaceOnUse" width="1700" height="320" patternTransform="translate(30 -60) scale(1 .3)"><image href="${tex.cab}" width="1700" height="320" preserveAspectRatio="none"/></pattern>
-      <pattern id="cabWood" patternUnits="userSpaceOnUse" width="1700" height="850" x="30" y="0"><image href="${tex.cab}" width="1700" height="850" preserveAspectRatio="none"/></pattern>
-      <pattern id="cabWood2" patternUnits="userSpaceOnUse" width="1700" height="850" patternTransform="translate(30 -260)"><image href="${tex.cab}" width="1700" height="850" preserveAspectRatio="none"/></pattern>
+      <pattern id="cabTop" patternUnits="userSpaceOnUse" width="1700" height="320" patternTransform="translate(30 -60) scale(1 .3)"><image decoding="sync" href="${tex.cab}" width="1700" height="320" preserveAspectRatio="none"/></pattern>
+      <pattern id="cabWood" patternUnits="userSpaceOnUse" width="1700" height="850" x="30" y="0"><image decoding="sync" href="${tex.cab}" width="1700" height="850" preserveAspectRatio="none"/></pattern>
+      <pattern id="cabWood2" patternUnits="userSpaceOnUse" width="1700" height="850" patternTransform="translate(30 -260)"><image decoding="sync" href="${tex.cab}" width="1700" height="850" preserveAspectRatio="none"/></pattern>
       <linearGradient id="cabLight" x1="0" y1="0" x2="1" y2="0">
         <stop offset="0" stop-color="#ffcf96" stop-opacity=".22"/><stop offset=".22" stop-color="#ffcf96" stop-opacity=".06"/><stop offset=".55" stop-color="#000" stop-opacity=".22"/><stop offset="1" stop-color="#000" stop-opacity=".62"/>
       </linearGradient>
@@ -979,10 +979,10 @@ function tvBodySVG(tex) {
   };
   return `<svg class="tv-body" viewBox="0 0 800 612" aria-hidden="true">
   <defs>
-    <pattern id="woodH" patternUnits="userSpaceOnUse" width="800" height="300"><image href="${tex.tvH}" width="800" height="300" preserveAspectRatio="none"/></pattern>
-    <pattern id="woodH2" patternUnits="userSpaceOnUse" width="800" height="300" patternTransform="translate(0 130)"><image href="${tex.tvH}" width="800" height="300" preserveAspectRatio="none"/></pattern>
-    <pattern id="woodV" patternUnits="userSpaceOnUse" width="300" height="800"><image href="${tex.tvV}" width="300" height="800" preserveAspectRatio="none"/></pattern>
-    <pattern id="woodV2" patternUnits="userSpaceOnUse" width="300" height="800" patternTransform="translate(140 0)"><image href="${tex.tvV}" width="300" height="800" preserveAspectRatio="none"/></pattern>
+    <pattern id="woodH" patternUnits="userSpaceOnUse" width="800" height="300"><image decoding="sync" href="${tex.tvH}" width="800" height="300" preserveAspectRatio="none"/></pattern>
+    <pattern id="woodH2" patternUnits="userSpaceOnUse" width="800" height="300" patternTransform="translate(0 130)"><image decoding="sync" href="${tex.tvH}" width="800" height="300" preserveAspectRatio="none"/></pattern>
+    <pattern id="woodV" patternUnits="userSpaceOnUse" width="300" height="800"><image decoding="sync" href="${tex.tvV}" width="300" height="800" preserveAspectRatio="none"/></pattern>
+    <pattern id="woodV2" patternUnits="userSpaceOnUse" width="300" height="800" patternTransform="translate(140 0)"><image decoding="sync" href="${tex.tvV}" width="300" height="800" preserveAspectRatio="none"/></pattern>
     <linearGradient id="tvLight" x1="0" y1="0" x2="1" y2=".5">
       <stop offset="0" stop-color="#ffd7a3" stop-opacity=".3"/><stop offset=".4" stop-color="#ffd7a3" stop-opacity="0"/><stop offset=".72" stop-color="#000" stop-opacity=".2"/><stop offset="1" stop-color="#000" stop-opacity=".5"/>
     </linearGradient>

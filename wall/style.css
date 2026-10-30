@@ -167,14 +167,14 @@ img { -webkit-user-drag: none; }
 .pin::before {
   content: '';
   position: absolute;
-  left: 13px;
-  top: 18px;
-  width: 28px;
-  height: 9px;
+  left: 11px;
+  top: 15px;
+  width: 32px;
+  height: 14px;
   border-radius: 50%;
-  background: rgba(30, 20, 10, .32);
+  /* soft shadow from a gradient, not filter: blur() — dozens of blurred pins made every tile slow to paint on phones */
+  background: radial-gradient(closest-side, rgba(30, 20, 10, .34), rgba(30, 20, 10, .16) 55%, rgba(30, 20, 10, 0));
   transform: rotate(32deg);
-  filter: blur(1.5px);
 }
 .pin::after {
   content: '';
@@ -925,7 +925,10 @@ img { -webkit-user-drag: none; }
 .stork svg { display: block; width: 100%; height: auto; }
 
 .echo { opacity: .8; }
-.echo > .face { filter: sepia(.3) saturate(.6); }
+/* faded look from a flat wash instead of sepia/saturate/grayscale filters, which are slow to paint on phones */
+.echo--poster > .face, .echo--letter > .face { position: relative; }
+.echo--poster > .face::after, .echo--letter > .face::after { content: ''; position: absolute; inset: 0; background: rgba(214, 196, 160, .28); pointer-events: none; }
+.echo__badge { z-index: 1; }
 .echo--poster > .face, .echo--letter > .face {
   height: 300px;
   padding: 26px;
@@ -936,7 +939,7 @@ img { -webkit-user-drag: none; }
 .echo--poster > .face { background: #e9c6b0; color: #6a3a2a; font: 400 29px/1.05 var(--f-poster); text-transform: uppercase; }
 .echo--letter > .face { background: repeating-linear-gradient(180deg, transparent 0 34px, rgba(70, 120, 200, .25) 34px 35px), #faf6ec; color: #3a4a88; font: 700 34px/1.05 var(--f-hand); }
 .echo--photo > .face { padding: 10px 10px 4px; background: #f4f0e6; box-shadow: 0 10px 16px -8px rgba(30, 20, 10, .4); }
-.echo--photo img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; filter: grayscale(1) contrast(.95); }
+.echo--photo img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; opacity: .62; }
 .echo__c { display: block; padding: 6px 2px 4px; font: 19px/1.05 var(--f-hand); color: #4a4038; text-align: center; }
 .echo__badge {
   position: absolute;

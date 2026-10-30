@@ -128,6 +128,11 @@ button {
   width: calc(100% + 56px);
   height: calc(100% + 56px);
 }
+/* The tail redraws every frame while it flicks. On its own layer it repaints alone; without one it dragged
+   the whole room (wood textures, SVG filters) into a repaint every frame, which blinked on Android. */
+.cat-tail {
+  will-change: transform;
+}
 .screenlight {
   left: -600px;
   top: -420px;

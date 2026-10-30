@@ -635,6 +635,9 @@ const viewerEl = $('#viewer');
 const guideEl = $('#guide');
 
 const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+// On phones the tube's animated grain, hum bar and brightness flicker read as the picture flickering,
+// so touch devices get about a third of it.
+const tubeMotion = () => (S.reduced ? 0 : window.matchMedia('(pointer: coarse)').matches ? 0.35 : 1);
 const S = {
   power: false,
   ch: 0,
@@ -703,10 +706,10 @@ async function boot() {
   window.addEventListener('resize', () => requestAnimationFrame(layout));
   mqReduce.addEventListener?.('change', (e) => {
     S.reduced = e.matches;
-    crtState.motion = S.reduced ? 0 : 1;
+    crtState.motion = tubeMotion();
     applySnow();
   });
-  crtState.motion = S.reduced ? 0 : 1;
+  crtState.motion = tubeMotion();
   screen.reduced = S.reduced;
   // fonts used inside the canvas
   const fams = ['16px "Press Start 2P"', '600 30px Cormorant', 'italic 600 30px Cormorant', '20px "Russo One"', '500 20px Rubik', '600 20px Rubik', '600 30px Literata'];
