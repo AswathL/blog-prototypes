@@ -128,11 +128,6 @@ button {
   width: calc(100% + 56px);
   height: calc(100% + 56px);
 }
-/* The tail redraws every frame while it flicks. On its own layer it repaints alone; without one it dragged
-   the whole room (wood textures, SVG filters) into a repaint every frame, which blinked on Android. */
-.cat-tail {
-  will-change: transform;
-}
 .screenlight {
   left: -600px;
   top: -420px;
@@ -191,12 +186,19 @@ button {
 }
 .cat-breath {
   transform-origin: 40% 96%;
-  animation: breathe 4.6s ease-in-out infinite;
-  will-change: transform;
 }
-.cat-headbob {
-  animation: headbob 4.6s ease-in-out infinite;
-  will-change: transform;
+/* Mouse/trackpad only. An endless animation makes the browser assume the element may overlap everything painted
+   after it, so the TV body, lamp, plants and remote all got layers of their own; on Android Chrome that exceeded
+   the GPU tile budget and parts of the scene blinked out. On touch devices the cat sleeps still (the tail still flicks). */
+@media (hover: hover) and (pointer: fine) {
+  .cat-breath {
+    animation: breathe 4.6s ease-in-out infinite;
+    will-change: transform;
+  }
+  .cat-headbob {
+    animation: headbob 4.6s ease-in-out infinite;
+    will-change: transform;
+  }
 }
 @keyframes breathe {
   0%,
@@ -408,6 +410,13 @@ button {
   background-image: radial-gradient(ellipse 75% 70% at 50% 46%, transparent 55%, rgba(6, 3, 1, 0.5) 100%), var(--grain, none);
   background-size: 100% 100%, 256px 256px;
   transition: opacity 0.8s ease;
+}
+/* Touch devices: the full-screen lens overlaps the live screen, so it would be one more full-screen layer.
+   Its vignette is baked into the wallpaper instead (scene.js). */
+@media (hover: none), (pointer: coarse) {
+  .lens {
+    display: none;
+  }
 }
 .app.is-zoomed .lens {
   opacity: 0;

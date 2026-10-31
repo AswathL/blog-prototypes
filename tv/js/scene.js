@@ -342,7 +342,12 @@ function svgImage(markup, w, h) {
  * and lamp glow (screen). Canvas compositing instead of CSS blend modes keeps the
  * compositor idle while the telly animates.
  */
-async function makeWall(cv) {
+// The wallpaper is painted offscreen and shown as a plain <img>. A big on-page canvas gets promoted to its own
+// compositor layer, which forced the stage, remote and TV body onto huge layers of their own; on Android that blew
+// the GPU tile budget and parts of the room blinked out for a frame. A static image needs no layer.
+async function makeWall(img) {
+  const cv = document.createElement('canvas');
+  let url = null;
   const tileSvg = wallpaperTile();
   const [tileImg, darkImg, warmImg] = await Promise.all([
     new Promise((res, rej) => {
@@ -396,9 +401,31 @@ async function makeWall(cv) {
       c.globalCompositeOperation = 'screen';
       c.drawImage(warmImg, -400, -400, 1300, 1400);
       c.globalCompositeOperation = 'source-over';
+      if (BAKE_VIGNETTE) {
+        // touch devices skip the full-screen .lens overlay (another big layer); keep its vignette on the wall
+        c.setTransform(vw0 * 0.75 * dpr, 0, 0, vh0 * 0.7 * dpr, (m + vw0 * 0.5) * dpr, (m + vh0 * 0.46) * dpr);
+        const g = c.createRadialGradient(0, 0, 0, 0, 0, 1);
+        g.addColorStop(0.55, 'rgba(6, 3, 1, 0)');
+        g.addColorStop(1, 'rgba(6, 3, 1, 0.5)');
+        c.fillStyle = g;
+        c.fillRect(-4, -4, 8, 8);
+      }
+      cv.toBlob(
+        (blob) => {
+          if (!blob) return;
+          const prev = url;
+          url = URL.createObjectURL(blob);
+          img.onload = () => prev && URL.revokeObjectURL(prev);
+          img.src = url;
+        },
+        'image/jpeg',
+        0.92,
+      );
     },
   };
 }
+
+const BAKE_VIGNETTE = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
 function leafPath(x, y, size, angleDeg) {
   // heart-shaped pothos leaf, base at (0,0) pointing up (-y)
