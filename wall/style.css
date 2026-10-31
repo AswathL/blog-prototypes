@@ -75,7 +75,12 @@ img { -webkit-user-drag: none; }
 .stage.is-grabbing { cursor: grabbing; }
 
 .world { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; }
-.world.is-moving { will-change: transform; }
+/* Mouse/trackpad only. On Android Chrome a composited world layer (toggled per gesture or permanent) made content
+   and the toolbar blink out for a frame while panning, and left holes when zooming out (tile memory). Measured on a
+   phone: no flicker without it. */
+@media (hover: hover) and (pointer: fine) {
+  .world.is-moving { will-change: transform; }
+}
 .layer { position: absolute; left: 0; top: 0; width: 0; height: 0; }
 
 .chunkbg {
@@ -845,7 +850,9 @@ img { -webkit-user-drag: none; }
 .marti > .face { width: 100%; height: 100%; transform-origin: 50% 3%; }
 .marti svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(5px 9px 4px rgba(30, 20, 10, .25)); }
 .pin--marti { z-index: 5; }
-@media (prefers-reduced-motion: no-preference) {
+/* Mouse/trackpad devices only. An endless animation puts the martenitsa on its own compositor layer, and on
+   Android Chrome that split the wall into ~100 layers rebuilt on every pan: content blinked out for a frame. */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
   .marti > .face { animation: sway 5.6s ease-in-out infinite alternate; }
   .is-hidden .marti > .face { animation-play-state: paused; }
 }

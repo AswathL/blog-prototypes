@@ -1308,7 +1308,10 @@ export function buildLayout() {
   });
 
   // ---------- curated clutter ----------
-  decor.push({ kind: 'marti', x: -1572, y: -555, w: 92, h: 230, r: 2 });
+  // On desktop martenitsas sway forever, which gives each its own compositor layer. They live in the top layer so
+  // nothing is painted above them: anything painted above an animated layer and overlapping it gets forced onto a
+  // layer of its own (on phones the sway is off entirely, see .marti in style.css).
+  decor.push({ kind: 'marti', x: -1572, y: -555, w: 92, h: 230, r: 2, layer: 'top' });
   decor.push({ kind: 'ticket', t: TICKETS[0], x: -1585, y: 655, w: 250, h: 112, r: -6 });
   decor.push({ kind: 'sticky', line: ONE_LINERS[1], x: 655, y: -60, w: 170, h: 170, r: 4, color: '#ffe66d' });
   decor.push({ kind: 'sticky', line: ONE_LINERS[0], x: -690, y: -385, w: 160, h: 160, r: -6, color: '#9ef0c6' });
@@ -1543,7 +1546,7 @@ export function createWorld(worldEl, camera) {
             break;
           }
           case 'marti':
-            add({ kind, x, y, w: 92, h: 230, r: between(rnd, -4, 4) });
+            add({ kind, x, y, w: 92, h: 230, r: between(rnd, -4, 4), layer: 'top' }); // see the curated martenitsa
             break;
           case 'staples':
             add({ kind, x, y, w: 46, h: 22, r: r * 3, sm: true });
@@ -1557,8 +1560,8 @@ export function createWorld(worldEl, camera) {
       const [x, y] = at(between(rnd, 0.2, 0.8), between(rnd, 0.2, 0.8));
       const pool = contentList.filter((it) => it.hit && (it.kind === 'letter' || it.kind === 'poster' || it.kind === 'photo'));
       const src = pick(rnd, pool);
-      const kind = src.kind === 'photo' ? 'photo' : src.kind;
-      add({
+      const kind = src?.kind;
+      if (src) add({
         kind: 'echo', x, y, w: kind === 'photo' ? 200 : 260, h: kind === 'photo' ? 250 : 300, r: between(rnd, -8, 8),
         src: { kind, id: src.id, slug: src.slug, album: src.album, index: src.index },
       });
@@ -1633,6 +1636,9 @@ export function createWorld(worldEl, camera) {
   }
 
   function update() {
+    // Android fires resize while the page is still loading; generating chunks before the curated content exists
+    // crashed (no echo sources) and let filler land on top of the content (no keep-out zones yet).
+    if (!contentList.length) return;
     const v = camera.viewRect();
     const vw = v.x1 - v.x0, vh = v.y1 - v.y0;
     const m = camera.z < 0.35 ? 0.12 : 0.35;
@@ -1852,7 +1858,10 @@ export function createCamera(stage, worldEl, opts = {}) {
 
   function apply() {
     const tx = vw / 2 - cam.x * cam.z, ty = vh / 2 - cam.y * cam.z;
-    worldEl.style.transform = `translate(${tx.toFixed(2)}px,${ty.toFixed(2)}px) scale(${cam.z.toFixed(5)})`;
+    // translate3d keeps the world on one permanent compositor layer. Toggling will-change below then only switches
+    // how it rasters (fast bitmap while moving, crisp re-raster after a zoom) instead of creating and destroying the
+    // layer on every gesture, which made content blink out for a frame on Android Chrome.
+    worldEl.style.transform = `translate3d(${tx.toFixed(2)}px,${ty.toFixed(2)}px,0) scale(${cam.z.toFixed(5)})`;
   }
 
   function notify() {
