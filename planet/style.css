@@ -28,14 +28,6 @@
   --safe-l: env(safe-area-inset-left, 0px);
   --gut: 28px;
 }
-body[data-sky='day'] {
-  --hud-fg: #2a2231;
-  --hud-dim: rgba(42, 34, 49, 0.76);
-  --hud-glass: rgba(255, 250, 241, 0.62);
-  --hud-glass-2: rgba(255, 250, 241, 0.86);
-  --hud-line: rgba(42, 34, 49, 0.14);
-  --hud-shadow: 0 2px 14px rgba(255, 255, 255, 0.6);
-}
 
 *,
 *::before,
@@ -104,9 +96,6 @@ button {
   pointer-events: none;
   background: radial-gradient(130% 95% at 50% 50%, transparent 58%, rgba(8, 5, 28, 0.5) 100%);
   transition: opacity 1s;
-}
-body[data-sky='day'] .vignette {
-  background: radial-gradient(130% 95% at 50% 50%, transparent 62%, rgba(255, 214, 190, 0.32) 100%);
 }
 
 .hud {
@@ -284,17 +273,6 @@ body.is-ready .brand .ch {
   transition:
     transform 0.7s var(--ease-spring),
     opacity 0.3s;
-}
-body[data-sky='night'] .ctl-sky .ic-moon,
-body[data-sky='day'] .ctl-sky .ic-sun {
-  opacity: 0;
-  transform: rotate(-120deg) scale(0.3);
-}
-.ctl-sky .ic-sun {
-  color: #ffd166;
-}
-body[data-sky='day'] .ctl-sky .ic-moon {
-  color: #5a4a9a;
 }
 .ctl-sound .mute {
   opacity: 1;
@@ -632,10 +610,6 @@ body[data-lang='en'] .lang-knob-ring {
   vertical-align: -0.1em;
   text-shadow: 0 0.06em 0 #3b2350;
 }
-body[data-sky='day'] .census strong {
-  color: var(--terra);
-  text-shadow: 0 0.06em 0 rgba(59, 35, 80, 0.25);
-}
 .grows {
   margin: 2px 0 12px;
   font: 600 21px/1.15 var(--f-hand);
@@ -686,15 +660,6 @@ body[data-sky='day'] .census strong {
 }
 .legend [data-legend='moon'] .ic {
   color: #fff1c8;
-}
-body[data-sky='day'] .legend [data-legend='story'] .ic {
-  color: var(--terra);
-}
-body[data-sky='day'] .legend [data-legend='opinion'] .ic {
-  color: #b07800;
-}
-body[data-sky='day'] .legend [data-legend='moon'] .ic {
-  color: #5a4a9a;
 }
 .legend b {
   font-weight: 700;

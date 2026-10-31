@@ -11,7 +11,6 @@ const reducedMQ = matchMedia('(prefers-reduced-motion: reduce)');
 const isReduced = () => reducedMQ.matches;
 const coarse = matchMedia('(pointer: coarse)').matches;
 const lite = coarse || Math.min(window.innerWidth, window.innerHeight) < 600;
-const params = new URLSearchParams(location.search);
 
 const T = (key, vars) => {
   const d = STR[Blog.lang] || STR.bg;
@@ -30,22 +29,6 @@ let worldReady = false;
 let resolveReady;
 const ready = new Promise((r) => (resolveReady = r));
 const bootT = performance.now();
-
-/* ------------------------------------------------------------------ */
-/* Day / night                                                        */
-/* ------------------------------------------------------------------ */
-function clockDayness(d = new Date()) {
-  const h = d.getHours() + d.getMinutes() / 60;
-  return smooth(5.5, 7.5, h) * (1 - smooth(18.5, 20.5, h));
-}
-let dayTarget = params.get('sky') === 'night' ? 0 : params.get('sky') === 'day' ? 1 : clockDayness();
-function setSkyAttr() {
-  document.body.dataset.sky = dayTarget >= 0.5 ? 'day' : 'night';
-  const b = $('#btn-sky');
-  b.setAttribute('aria-label', dayTarget >= 0.5 ? T('toNight') : T('toDay'));
-  b.title = b.getAttribute('aria-label');
-  document.querySelector('meta[name="theme-color"]').content = dayTarget >= 0.5 ? '#bfe0f4' : '#16123a';
-}
 
 /* ------------------------------------------------------------------ */
 /* Static text                                                        */
@@ -108,7 +91,6 @@ function applyStatic(flip = false) {
   sb.title = T('sound');
   $('#gallery-close').setAttribute('aria-label', Blog.t('close'));
   $('#list-close').setAttribute('aria-label', Blog.t('close'));
-  setSkyAttr();
   updatePinText();
   buildList();
 }
@@ -543,12 +525,6 @@ async function closeList() {
 /* ------------------------------------------------------------------ */
 const legendCursor = { story: -1, opinion: -1 };
 function setupControls() {
-  $('#btn-sky').addEventListener('click', () => {
-    dayTarget = dayTarget >= 0.5 ? 0 : 1;
-    setSkyAttr();
-    world?.setDayness(dayTarget);
-    sound.chime();
-  });
   $('#btn-sound').addEventListener('click', (e) => {
     const on = sound.toggle();
     e.currentTarget.setAttribute('aria-pressed', String(on));
@@ -675,7 +651,7 @@ async function boot() {
       reduced: isReduced(),
       lite,
       skipIntro: deep,
-      dayness: dayTarget,
+      dayness: 0, // always night: the daytime palette looked off
       ringPhotos,
       onFrame,
       onPick,
